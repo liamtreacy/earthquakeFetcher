@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
+using ExternalDataRetrieverService.Services;
 
 namespace MvcMovie.Controllers;
 
@@ -11,6 +12,8 @@ public class RetrieveDataController : ControllerBase
     // GET: /RetrieveData/
     public string Index()
     {
-        return "Data will be retrieved...";
+        var service = new EarthquakeRetrieverService();
+        var str = service.Get();
+        return "Data will be retrieved... " + str;
     }
 }
