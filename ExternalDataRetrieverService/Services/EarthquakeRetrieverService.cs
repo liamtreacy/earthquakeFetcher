@@ -25,14 +25,27 @@ public class EarthquakeRetrieverService
             return reader.ReadToEnd();
         }
     }
-
-    // change to List<Earthquake>
-    string ParseEarthquakes(string jsonStr)
+    
+    List<Earthquake> ParseEarthquakes(string jsonStr)
     {
         dynamic json  = JsonConvert.DeserializeObject(jsonStr);
 
         dynamic features = json["features"];
-        return features[0]["properties"]["place"];
+
+        var erqs = new List<Earthquake>();
+
+        foreach (var erq in features)
+        {
+            erqs.Add(new Earthquake
+            {
+                Id = erq["id"],
+                Magnitude = erq["properties"]["mag"],
+                Place = erq["properties"]["place"],
+                //Time = new DateTime(erq["properties"]["time"])
+            });
+        }
+
+        return erqs;
     }
     
     public string Get()
@@ -40,6 +53,13 @@ public class EarthquakeRetrieverService
         var jsonStr = PerformGetRequest();
 
         var eqs = ParseEarthquakes(jsonStr);
-        return eqs;
+        var places = "";
+
+        foreach (var earthquake in eqs)
+        {
+            places = places + ", " + earthquake.Place;
+        }
+
+        return places;
     }
 }
