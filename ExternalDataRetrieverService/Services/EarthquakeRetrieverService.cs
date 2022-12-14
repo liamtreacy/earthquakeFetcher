@@ -59,12 +59,20 @@ public class EarthquakeRetrieverService
 
         foreach (var earthquake in eqs)
         {
+            if (EarthquakeExists(context, earthquake.Id))
+                break;
+            
             context.Earthquakes.Add(earthquake);
 
             await context.SaveChangesAsync();
         }
 
         return true;
+    }
+    
+    private bool EarthquakeExists(EarthquakeContext context, string id)
+    {
+        return (context.Earthquakes?.Any(e => e.Id == id)).GetValueOrDefault();
     }
     
 }
