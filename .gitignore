@@ -1,2 +1,7 @@
 /Build
 earthquakeFetcher.xcodeproj
+obj/
+bin/
+*.db
+*.db-
+Debug/
