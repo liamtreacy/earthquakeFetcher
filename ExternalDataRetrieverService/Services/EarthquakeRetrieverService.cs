@@ -1,5 +1,7 @@
 using System.Net;
+using EarthquakeRetrieverService.Models;
 using ExternalDataRetrieverService.Models;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace ExternalDataRetrieverService.Services;
@@ -41,15 +43,14 @@ public class EarthquakeRetrieverService
                 Id = erq["id"],
                 Magnitude = erq["properties"]["mag"],
                 Place = erq["properties"]["place"],
-                // ::TODO Map time
-                //Time = new DateTime(erq["properties"]["time"])
+                Time = new DateTime((long)(erq["properties"]["time"]))
             });
         }
 
         return erqs;
     }
     
-    public string Get()
+    public async Task<bool> Get(EarthquakeContext context)
     {
         var jsonStr = PerformGetRequest();
 
@@ -58,13 +59,12 @@ public class EarthquakeRetrieverService
 
         foreach (var earthquake in eqs)
         {
-            places = places + ", " + earthquake.Place;
+            context.Earthquakes.Add(earthquake);
+
+            await context.SaveChangesAsync();
         }
 
-        return places;
-        
-        // ::TODO
-        // Put them in DB
-        // Return Ok
+        return true;
     }
+    
 }

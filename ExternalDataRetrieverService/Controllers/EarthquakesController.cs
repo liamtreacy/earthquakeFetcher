@@ -29,7 +29,12 @@ namespace ExternalDataRetrieverService.Controllers
           {
               return NotFound();
           }
-            return await _context.Earthquakes.ToListAsync();
+          
+          var service = new ExternalDataRetrieverService.Services.
+              EarthquakeRetrieverService();
+          await service.Get(_context);
+          
+          return await _context.Earthquakes.ToListAsync();
         }
 
         // GET: api/Earthquakes/5
