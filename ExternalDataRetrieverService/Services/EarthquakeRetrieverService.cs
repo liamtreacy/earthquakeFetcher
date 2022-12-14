@@ -41,6 +41,7 @@ public class EarthquakeRetrieverService
                 Id = erq["id"],
                 Magnitude = erq["properties"]["mag"],
                 Place = erq["properties"]["place"],
+                // ::TODO Map time
                 //Time = new DateTime(erq["properties"]["time"])
             });
         }
@@ -61,5 +62,9 @@ public class EarthquakeRetrieverService
         }
 
         return places;
+        
+        // ::TODO
+        // Put them in DB
+        // Return Ok
     }
 }
