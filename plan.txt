@@ -1,0 +1,19 @@
+Vague idea...
+
+Summary: Web page (served locally) which displays earthquake data (biggest, latest etc)
+
+Do in .Net
+Use a db
+Use RabbitMq (if possible)
+
+
+
+
+1) A service which Gets the data and populates a db
+... vague
+
+When retrieved or new data got, a new rabbit message is sent.
+
+Another service can be queried to return biggest, latest etc.
+
+If you get a rabbit saying there's new data available, then you could query that other service.
