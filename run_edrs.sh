@@ -1,0 +1,1 @@
+cd ExternalDataRetrieverService && dotnet run
