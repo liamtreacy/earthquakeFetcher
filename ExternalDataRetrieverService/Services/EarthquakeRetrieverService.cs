@@ -15,22 +15,17 @@ public class EarthquakeRetrieverService
 
     private string PerformGetRequest()
     {
-        // TODO:: Improve this
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(GeoFeed);
-        request.AutomaticDecompression = 
-            DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-        using(HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-        using(Stream stream = response.GetResponseStream())
-        using(StreamReader reader = new StreamReader(stream))
-        {
-            return reader.ReadToEnd();
-        }
+        HttpClient client = new HttpClient();
+        var response = client.GetStringAsync(GeoFeed).Result;
+        return response;
     }
     
-    List<Earthquake> ParseEarthquakes(string jsonStr)
+    List<Earthquake>? ParseEarthquakes(string jsonStr)
     {
-        dynamic json  = JsonConvert.DeserializeObject(jsonStr);
+        dynamic json  = JsonConvert.DeserializeObject(jsonStr) ?? throw new InvalidOperationException();
+
+        if (json == null)
+            return null;
 
         dynamic features = json["features"];
 
@@ -53,9 +48,10 @@ public class EarthquakeRetrieverService
     public async Task<bool> Get(EarthquakeContext context)
     {
         var jsonStr = PerformGetRequest();
-
         var eqs = ParseEarthquakes(jsonStr);
-        var places = "";
+
+        if (eqs == null)
+            return false;
 
         foreach (var earthquake in eqs)
         {
