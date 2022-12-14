@@ -6,3 +6,4 @@ bin/
 *.db-
 Debug/
 .idea/
+earthquake_fetcher.sln.DotSettings.user
