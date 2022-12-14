@@ -17,3 +17,11 @@ When retrieved or new data got, a new rabbit message is sent.
 Another service can be queried to return biggest, latest etc.
 
 If you get a rabbit saying there's new data available, then you could query that other service.
+
+
+===
+
+Add Cucumber tests around ExternalDataRetrieverService
+Add GetLatest, Biggest mag 
+
+
