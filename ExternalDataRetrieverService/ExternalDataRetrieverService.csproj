@@ -25,4 +25,8 @@
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="tests" />
+  </ItemGroup>
+
 </Project>
