@@ -24,4 +24,6 @@ If you get a rabbit saying there's new data available, then you could query that
 Add Cucumber tests around ExternalDataRetrieverService
 Add GetLatest, Biggest mag 
 
+===
 
+Just write the cucumber tests in anothe language?
