@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ExternalDataRetrieverService\ExternalDataRetrieverService.csproj" />
+      <ProjectReference Include="..\EDRS\EDRS.csproj" />
     </ItemGroup>
 
 </Project>

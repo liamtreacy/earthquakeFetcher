@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalDataRetrieverService", "ExternalDataRetrieverService\ExternalDataRetrieverService.csproj", "{46306355-B452-4AB1-B1BA-D63800343608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDRS", "EDRS\EDRS.csproj", "{46306355-B452-4AB1-B1BA-D63800343608}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{80201F27-0BB9-4A7A-A694-505D74590FD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDRS.tests", "EDRS.tests\EDRS.tests.csproj", "{80201F27-0BB9-4A7A-A694-505D74590FD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
