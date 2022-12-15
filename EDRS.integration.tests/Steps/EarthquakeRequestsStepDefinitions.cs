@@ -24,8 +24,14 @@ public sealed class CalculatorStepDefinitions
         Factory = factory;
         _outputHelper = outputHelper;
     }
+
+    [Given("the stored data is cleared")]
+    public async void ClearData()
+    {
+         Response = await Client.DeleteAsync("");
+    }
     
-    [Given(@"I am a client")]
+    [Given("I am a client")]
     public void GivenIAmAClient()
     {
         Client = Factory.CreateDefaultClient(new Uri(BaseAddress));
@@ -48,7 +54,7 @@ public sealed class CalculatorStepDefinitions
     public async Task ThenTheResponseDataShouldBe()
     {
         var response = await Response.Content.ReadAsStringAsync();
-        _outputHelper.WriteLine("LIAMLIAM");
+        //_outputHelper.WriteLine("LIAMLIAM");
         Assert.NotEmpty(response);
     }
 }

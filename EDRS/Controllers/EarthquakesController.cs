@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EarthquakeRetrieverService.Models;
 using ExternalDataRetrieverService.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ExternalDataRetrieverService.Controllers
 {
@@ -36,6 +37,18 @@ namespace ExternalDataRetrieverService.Controllers
           
           return await _context.Earthquakes.ToListAsync();
         }
+        
+        // GET: api/Earthquakes/LargestMag
+        [HttpGet("LargestMag")]
+        public async Task<ActionResult<Earthquake>> GetLargestMag()
+        {
+            if (_context.Earthquakes.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            return await _context.Earthquakes.FirstAsync();
+        }
 
         // GET: api/Earthquakes/5
         [HttpGet("{id}")]
@@ -55,89 +68,26 @@ namespace ExternalDataRetrieverService.Controllers
             return earthquake;
         }
 
-        // PUT: api/Earthquakes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEarthquake(string id, Earthquake earthquake)
-        {
-            if (id != earthquake.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(earthquake).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EarthquakeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Earthquakes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Earthquake>> PostEarthquake(Earthquake earthquake)
-        {
-          if (_context.Earthquakes == null)
-          {
-              return Problem("Entity set 'EarthquakeContext.Earthquakes'  is null.");
-          }
-            _context.Earthquakes.Add(earthquake);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EarthquakeExists(earthquake.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetEarthquake", new { id = earthquake.Id }, earthquake);
-        }
-
-        // DELETE: api/Earthquakes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEarthquake(string id)
+        // DELETE: api/Earthquakes/
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEarthquakes()
         {
             if (_context.Earthquakes == null)
             {
                 return NotFound();
             }
-            var earthquake = await _context.Earthquakes.FindAsync(id);
-            if (earthquake == null)
+
+            var earthquakes = await _context.Earthquakes.ToListAsync();
+            if (earthquakes == null)
             {
                 return NotFound();
             }
 
-            _context.Earthquakes.Remove(earthquake);
+            _context.Earthquakes.RemoveRange(earthquakes);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EarthquakeExists(string id)
-        {
-            return (_context.Earthquakes?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
     }
 }
